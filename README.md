@@ -81,13 +81,8 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 
     var todos = [Todo]()
 
-    // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.title = "Todos"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LabelCell")
 
         self.load(endpoint: TodosAPI.shared.get()) { (todos) in
             self.todos = todos
@@ -95,20 +90,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
         }
     }
 
-    // MARK: - UITableViewDataSource
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.todos.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
-
-        let todo = self.todos[indexPath.row]
-        cell.textLabel?.text = todo.title
-
-        return cell
-    }
+    // ...
 
 }
 ```
@@ -117,7 +99,7 @@ You can configure the app-wide default by setting `EndpointDefaults.defaultActiv
 
 ## Using the same endpoint from multiple places in the app
 
-A class `StatefulEndpoint` for sharing and observing one endpoint from multiple places in a thread-safe way is provided. You might want to declare it in your API class, f.e.:
+`StatefulEndpoint` allows to share and observe an endpoint from multiple places in a thread-safe way. You might want to declare it in your API class, f.e.:
 
 ```swift
 class TodosAPI {
@@ -179,7 +161,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 
 ## What about other HTTP methods?
 
-Here is an example for a typical CRUD REST API:
+Here is an example for a full typical CRUD REST API:
 
 ```swift
 class TodosAPI {
