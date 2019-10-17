@@ -42,7 +42,7 @@ class TodosAPI {
         
         // TinyHTTP provides extensions for common tasks around configuring a URLRequest:
         var request = URLRequest(method: .get, url: self.url)
-        request.httpAccept(.json)
+        request.setHeaderAccept(.json)
         
         // pass in any function to decode the response to the actual type
         // JSONDecoder is extended with a function decodeResponse for easy JSON Codable support:
@@ -159,70 +159,6 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 }
 ```
 
-## What about other HTTP methods?
+## Wrapping a full REST API
 
-Here is an example for a full typical CRUD REST API:
-
-```swift
-class TodosAPI {
-
-    let url = URL(string: "https://jsonplaceholder.typicode.com/todos/")!
-    let jsonDecoder = JSONDecoder()
-    let jsonEncoder = JSONEncoder()
-
-    static let shared = TodosAPI()
-
-    private init() {}
-
-    lazy var all: StatefulEndpoint<[Todo]> = {
-        return StatefulEndpoint(endpoint: self.get())
-    }()
-
-    private func get() -> Endpoint<[Todo]> {
-        var request = URLRequest(method: .get, url: self.url)
-        request.httpAccept(.json)
-        return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
-    }
-
-    func get(id: Int) -> Endpoint<Todo> {
-        var request = URLRequest(method: .get, url: urlFor(id: id))
-        request.httpAccept(.json)
-        return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
-    }
-
-    func put(todo: Todo) -> Endpoint<Todo> {
-
-        var request: URLRequest
-        if let id = todo.id {
-            request = URLRequest(method: .put, url: self.urlFor(id: id))
-        } else {
-            request = URLRequest(method: .post, url: self.url)
-        }
-        request.httpAccept(.json)
-        request.httpContentType(.json)
-        request.httpBody = try! self.jsonEncoder.encode(TodoBody(todo: todo))
-
-        return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
-    }
-
-    func delete(todo: Todo) -> Endpoint<Void> {
-        var request = URLRequest(method: .delete, url: urlFor(id: todo.id!))
-        request.httpAccept(.json)
-        return Endpoint(request: request, decodeResponse: EndpointExpectation.ignoreResponse)
-    }
-
-    private func urlFor(id: Int) -> URL {
-        self.url.appendingRelative(String(id))
-    }
-
-}
-```
-
-
-You can use these manually using `URLSession` or call them using the `EndpointLoading` extension again:
-
-```swift
-self.load(endpoint: self.todosAPI.delete(todo: todo)) { result in
-    print("Todo was deleted")
-}
-```
+The example project contains an example for a full typical CRUD REST API, see [TodosAPI.swift](https://github.com/ralfebert/TinyHTTP/blob/master/Examples/TodosApp/TodosApp/API/TodosAPI.swift#L35).
