@@ -28,7 +28,7 @@ private let cellReuseIdentifier = "LabelCell"
 class TodosTableViewController: UITableViewController, EndpointLoading {
 
     let todosAPI = TodosAPI.shared
-    let allTodosEndpoint = TodosAPI.shared.all
+    let allTodosEndpoint = TodosAPI.shared.allTodos
     var todos = [Todo]()
 
     // MARK: - Lifecycle

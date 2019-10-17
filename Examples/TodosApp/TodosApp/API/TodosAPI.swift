@@ -42,7 +42,7 @@ class TodosAPI {
 
     private init() {}
 
-    lazy var all: StatefulEndpoint<[Todo]> = {
+    lazy var allTodos: StatefulEndpoint<[Todo]> = {
         StatefulEndpoint(endpoint: self.get())
     }()
 
