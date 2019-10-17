@@ -24,6 +24,12 @@ import Foundation
 
 extension URL {
 
+    public func appendingGetParameters(_ params: [String: String]) -> URL {
+        var components = URLComponents(url: self, resolvingAgainstBaseURL: true)!
+        components.queryItems = (components.queryItems ?? []) + params.map(URLQueryItem.init(name:value:))
+        return components.url!
+    }
+
     public func appendingRelative(_ string: String) -> URL {
         return URL(string: string, relativeTo: self)!
     }
