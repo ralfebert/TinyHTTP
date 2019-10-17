@@ -1,6 +1,6 @@
 # TinyHTTP
 
-TinyHTTP is lightweight library for making network calls with URLSession. Its designed to make JSON/REST calls in iOS apps in a controller-owned-networking style design easy and straightforward. It comes with customizable defaults for common tasks like activity indication and error handling out of the box:
+TinyHTTP is lightweight library for making network calls with URLSession. Its designed to make JSON/REST calls in iOS apps in a controller-owned-networking style easy and straightforward. It comes with an UIKit integration that provides customizable defaults for common tasks like activity indication and error handling out of the box:
 
 <img src="https://raw.githubusercontent.com/ralfebert/TinyHTTP/master/Docs/todos-loading.png" width="250">
 
