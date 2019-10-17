@@ -43,18 +43,18 @@ class TodosAPI {
     private init() {}
 
     lazy var all: StatefulEndpoint<[Todo]> = {
-        return StatefulEndpoint(endpoint: self.get())
+        StatefulEndpoint(endpoint: self.get())
     }()
 
     private func get() -> Endpoint<[Todo]> {
         var request = URLRequest(method: .get, url: self.url)
-        request.httpAccept(.json)
+        request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
     }
 
     func get(id: Int) -> Endpoint<Todo> {
         var request = URLRequest(method: .get, url: urlFor(id: id))
-        request.httpAccept(.json)
+        request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
     }
 
@@ -66,8 +66,8 @@ class TodosAPI {
         } else {
             request = URLRequest(method: .post, url: self.url)
         }
-        request.httpAccept(.json)
-        request.httpContentType(.json)
+        request.setHeaderAccept(.json)
+        request.setHeaderContentType(.json)
         request.httpBody = try! self.jsonEncoder.encode(TodoBody(todo: todo))
 
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
@@ -75,7 +75,7 @@ class TodosAPI {
 
     func delete(todo: Todo) -> Endpoint<Void> {
         var request = URLRequest(method: .delete, url: urlFor(id: todo.id!))
-        request.httpAccept(.json)
+        request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: EndpointExpectation.ignoreResponse)
     }
 

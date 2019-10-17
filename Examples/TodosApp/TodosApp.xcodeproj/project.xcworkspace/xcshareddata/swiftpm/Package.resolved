@@ -5,9 +5,9 @@
         "package": "TinyHTTP",
         "repositoryURL": "https://github.com/ralfebert/TinyHTTP.git",
         "state": {
-          "branch": "master",
-          "revision": "a42fab7b4dbb823e6862603935013dbadd9fa0b1",
-          "version": null
+          "branch": null,
+          "revision": "9ad401c713d27f43f9fd84083aa4d84c21a73bb6",
+          "version": "0.1.2"
         }
       }
     ]

@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import UIKit
 import TinyHTTP
+import UIKit
 
 private let cellReuseIdentifier = "LabelCell"
 
@@ -37,7 +37,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
         super.viewDidLoad()
 
         self.setupViews()
-        
+
         observe(endpoint: self.allTodosEndpoint) { todos in
             self.todos = todos
             self.tableView.reloadData()
