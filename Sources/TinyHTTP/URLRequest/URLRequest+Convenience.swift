@@ -29,11 +29,11 @@ extension URLRequest {
         self.httpMethod = method.rawValue
     }
 
-    public mutating func httpAccept(_ contentType: ContentType) {
+    public mutating func setHeaderAccept(_ contentType: ContentType) {
         self.addValue(contentType.rawValue, forHTTPHeaderField: HTTPHeader.accept.rawValue)
     }
 
-    public mutating func httpContentType(_ contentType: ContentType) {
+    public mutating func setHeaderContentType(_ contentType: ContentType) {
         self.addValue(contentType.rawValue, forHTTPHeaderField: HTTPHeader.contentType.rawValue)
     }
 
