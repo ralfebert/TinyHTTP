@@ -1,8 +1,10 @@
 # TinyHTTP
 
-TinyHTTP is minimalistic library for making network calls with URLSession designed for making JSON/REST calls in iOS apps in a controller-owned-networking style design. It comes with defaults for common tasks like providing an activity indicator out of the box (while being fully customizable):
+TinyHTTP is lightweight library for making network calls with URLSession. Its designed to make JSON/REST calls in iOS apps in a controller-owned-networking style design easy and straightforward. It comes with customizable defaults for common tasks like activity indication and error handling out of the box:
 
-<img src="https://raw.githubusercontent.com/ralfebert/TinyHTTP/master/Docs/todos-loading.png" width="200" style="border:1px solid gray;">
+<img src="https://raw.githubusercontent.com/ralfebert/TinyHTTP/master/Docs/todos-loading.png" width="250">
+
+It's very lightweight and simple and it will stay that way (less that 1000 lines of code).
 
 Available via Swift Package Manager at the following clone URL:
 
@@ -10,7 +12,7 @@ Available via Swift Package Manager at the following clone URL:
 https://github.com/ralfebert/TinyHTTP.git
 ```
 
-The easiast way to try it out is to clone the repository and run the example project from `Examples/TodosApp/TodosApp.xcodeproj` (please note that the jsonplaceholder API doesn't persist your changes).
+The easiest way to try it out is to clone the repository and run the example project from `Examples/TodosApp/TodosApp.xcodeproj` (please note that the jsonplaceholder.com API that's used for the example doesn't persist your changes).
 
 Inspired by [TinyNetworking](https://github.com/objcio/tiny-networking) and [Siesta](https://bustoutsolutions.github.io/siesta/).
 
@@ -79,13 +81,8 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 
     var todos = [Todo]()
 
-    // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationItem.title = "Todos"
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LabelCell")
 
         self.load(endpoint: TodosAPI.shared.get()) { (todos) in
             self.todos = todos
@@ -93,20 +90,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
         }
     }
 
-    // MARK: - UITableViewDataSource
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.todos.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
-
-        let todo = self.todos[indexPath.row]
-        cell.textLabel?.text = todo.title
-
-        return cell
-    }
+    // ...
 
 }
 ```
@@ -115,7 +99,7 @@ You can configure the app-wide default by setting `EndpointDefaults.defaultActiv
 
 ## Using the same endpoint from multiple places in the app
 
-A class `StatefulEndpoint` for sharing and observing one endpoint from multiple places in a thread-safe way is provided. You might want to declare it in your API class, f.e.:
+`StatefulEndpoint` allows to share and observe an endpoint from multiple places in a thread-safe way. You might want to declare it in your API class, f.e.:
 
 ```swift
 class TodosAPI {
@@ -177,7 +161,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 
 ## What about other HTTP methods?
 
-Here is an example for a typical CRUD REST API:
+Here is an example for a full typical CRUD REST API:
 
 ```swift
 class TodosAPI {
