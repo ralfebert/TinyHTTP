@@ -6,17 +6,19 @@ TinyHTTP is lightweight library for making network calls with URLSession. Its de
 
 It's very lightweight and simple and it will stay that way (less that 1000 lines of code).
 
-Available via Swift Package Manager at the following clone URL:
+Inspired by [TinyNetworking](https://github.com/objcio/tiny-networking) and [Siesta](https://bustoutsolutions.github.io/siesta/).
 
-```
-https://github.com/ralfebert/TinyHTTP.git
-```
+## Getting TinyHTTP
+
+TinyHTTP is available via Swift Package Manager: `https://github.com/ralfebert/TinyHTTP.git`
+
+## Example code
 
 The easiest way to try it out is to clone the repository and run the example project from `Examples/TodosApp/TodosApp.xcodeproj` (please note that the jsonplaceholder.com API that's used for the example doesn't persist your changes).
 
-Inspired by [TinyNetworking](https://github.com/objcio/tiny-networking) and [Siesta](https://bustoutsolutions.github.io/siesta/).
+## Guide
 
-## Declaring API endpoints
+### Declaring API endpoints
 
 TinyHTTP comes with a type `Endpoint` for describing a request and how the response is decoded.
 Let's say you want to make JSON/REST call to your favorite Todos API. Declare a class for the API and declare a method for every endpoint, for example:
@@ -49,7 +51,7 @@ class TodosAPI {
 }
 ```
 
-## Making API calls
+### Making API calls
 
 TinyHTTP provides an extension to `URLSession` to load an endpoint. HTTP status codes are automatically checked, when the response is available, you get called with a Result value:
 
@@ -66,7 +68,7 @@ let task = URLSession.shared.dataTask(endpoint: endpoint) { (result) in
 task.resume()
 ```
 
-## UIKit integration - Making calls in UIViewController classes
+### UIKit integration: Loading endpoints in UIViewController classes
 
 To make calls from a `UIViewController` make the controller conform to the `EndpointLoading` protocol that extends the class with a `load` method that loads an endpoint - with a default behavior for activity indication and error handling. For example:
 
@@ -94,7 +96,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 
 You can configure the app-wide default by setting `EndpointDefaults.defaultActivityIndicator` and `EndpointDefaults.defaultErrorHandler` functions or you can customize it per controller via parameters to the call to load.
 
-## Using the same endpoint from multiple places in the app
+### Using the same endpoint from multiple places in the app
 
 `StatefulEndpoint` allows to share and observe an endpoint from multiple places in a thread-safe way. You might want to declare it in your API class, f.e.:
 
@@ -156,6 +158,6 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 }
 ```
 
-## Wrapping a full REST API
+### Wrapping a full REST API
 
 The example project contains an example for a full typical CRUD REST API, see [TodosAPI.swift](https://github.com/ralfebert/TinyHTTP/blob/master/Examples/TodosApp/TodosApp/API/TodosAPI.swift#L35).
