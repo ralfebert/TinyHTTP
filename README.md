@@ -31,20 +31,17 @@ class TodosAPI {
 
     private let url = URL(string: "https://jsonplaceholder.typicode.com/todos/")!
     
-    // JSONDecoder is declared manually so you can configure it however needed for the API
     private let jsonDecoder = JSONDecoder()
 
-    // The easiest way to share a common API instance is to use a `shared` singleton
     static let shared = TodosAPI()
     private init() {}
 
     func get() -> Endpoint<[Todo]> {
-        
         // TinyHTTP provides extensions for common tasks around configuring a URLRequest:
         var request = URLRequest(method: .get, url: self.url)
         request.setHeaderAccept(.json)
         
-        // pass in any function to decode the response to the actual type
+        // pass in a function to decode the response to the actual type
         // JSONDecoder is extended with a function decodeResponse for easy JSON Codable support:
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
     }
@@ -69,9 +66,9 @@ let task = URLSession.shared.dataTask(endpoint: endpoint) { (result) in
 task.resume()
 ```
 
-## UIKit convenience - Making calls in UIViewController classes
+## UIKit integration - Making calls in UIViewController classes
 
-To make calls from a `UIViewController` make the controller conform to the `EndpointLoading` protocol that extends the class with a `load` method that allows to load an endpoint - with a proper default behavior for activity indication and error handling. For example:
+To make calls from a `UIViewController` make the controller conform to the `EndpointLoading` protocol that extends the class with a `load` method that allows to load an endpoint - with a default behavior for activity indication and error handling. For example:
 
 ```swift
 import UIKit
@@ -106,7 +103,7 @@ class TodosAPI {
 
     // ...
 
-    lazy var all: StatefulEndpoint<[Todo]> = {
+    lazy var allTodos: StatefulEndpoint<[Todo]> = {
         return StatefulEndpoint(endpoint: self.get())
     }()
 
@@ -122,7 +119,7 @@ class TodosAPI {
 You can observe a stateful endpoint instance:
 
 ```swift
-TodosAPI.shared.all.observe(owner: self) { (state) in
+TodosAPI.shared.allTodos.observe(owner: self) { (state) in
     switch(state) {
     case .empty:
         print("not yet")
@@ -136,7 +133,7 @@ TodosAPI.shared.all.observe(owner: self) { (state) in
 }
 ```
 
-Or use the `EndpointLoading` extension again which provides an `observe(endpoint:)` method which again adds default activity and error handling:
+Or use the `EndpointLoading` extension which provides an `observe(endpoint:)` method which again adds default activity and error handling:
 
 ```swift
 class TodosTableViewController: UITableViewController, EndpointLoading {
