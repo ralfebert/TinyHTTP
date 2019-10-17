@@ -23,11 +23,13 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "TinyHTTP",
-            dependencies: []
+            dependencies: [],
+            path: "Sources/TinyHTTP"
         ),
         .testTarget(
             name: "TinyHTTPTests",
-            dependencies: ["TinyHTTP"]
+            dependencies: ["TinyHTTP"],
+            path: "Tests/TinyHTTPTests"
         ),
     ]
 )

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TinyHTTP",
+        "repositoryURL": "https://github.com/ralfebert/TinyHTTP.git",
+        "state": {
+          "branch": "master",
+          "revision": "a42fab7b4dbb823e6862603935013dbadd9fa0b1",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
