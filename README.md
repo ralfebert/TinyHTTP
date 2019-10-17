@@ -68,7 +68,7 @@ task.resume()
 
 ## UIKit integration - Making calls in UIViewController classes
 
-To make calls from a `UIViewController` make the controller conform to the `EndpointLoading` protocol that extends the class with a `load` method that allows to load an endpoint - with a default behavior for activity indication and error handling. For example:
+To make calls from a `UIViewController` make the controller conform to the `EndpointLoading` protocol that extends the class with a `load` method that loads an endpoint - with a default behavior for activity indication and error handling. For example:
 
 ```swift
 import UIKit
