@@ -59,7 +59,6 @@ class TodosAPI {
     }
 
     func put(todo: Todo) -> Endpoint<Todo> {
-
         var request: URLRequest
         if let id = todo.id {
             request = URLRequest(method: .put, url: self.urlFor(id: id))
