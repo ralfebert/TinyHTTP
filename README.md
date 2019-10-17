@@ -1,6 +1,16 @@
 # TinyHTTP
 
-TinyHTTP is minimalistic abstraction for making network calls with URLSession designed for making JSON/REST calls in iOS apps in a controller-owned-networking style design.
+TinyHTTP is minimalistic library for making network calls with URLSession designed for making JSON/REST calls in iOS apps in a controller-owned-networking style design. It comes with defaults for common tasks like providing an activity indicator out of the box (while being fully customizable):
+
+![Activity Indicator](https://raw.githubusercontent.com/ralfebert/TinyHTTP/master/Docs/todos-loading.png)
+
+Available via Swift Package Manager at the following clone URL:
+
+```
+https://github.com/ralfebert/TinyHTTP.git
+```
+
+The easiast way to try it out is to clone the repository and run the example project from `Examples/TodosApp/TodosApp.xcodeproj` (please note that the jsonplaceholder API doesn't persist your changes).
 
 Inspired by [TinyNetworking](https://github.com/objcio/tiny-networking) and [Siesta](https://bustoutsolutions.github.io/siesta/).
 
@@ -167,9 +177,9 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
 
 ## What about other HTTP methods?
 
-Sure thing, here is an example for a typical CRUD REST API:
+Here is an example for a typical CRUD REST API:
 
-```
+```swift
 class TodosAPI {
 
     let url = URL(string: "https://jsonplaceholder.typicode.com/todos/")!
