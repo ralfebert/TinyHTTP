@@ -38,7 +38,7 @@ class TodosAPI {
     static let shared = TodosAPI()
     private init() {}
 
-    func get() -> Endpoint<[Todo]> {
+    func todos() -> Endpoint<[Todo]> {
         // TinyHTTP provides extensions for common tasks around configuring a URLRequest:
         var request = URLRequest(method: .get, url: self.url)
         request.setHeaderAccept(.json)
@@ -56,7 +56,7 @@ class TodosAPI {
 TinyHTTP provides an extension to `URLSession` to load an endpoint. HTTP status codes are automatically checked, when the response is available, you get called with a Result value:
 
 ```swift
-let endpoint = TodosAPI.shared.get()
+let endpoint = TodosAPI.shared.todos()
 let task = URLSession.shared.dataTask(endpoint: endpoint) { (result) in
     switch(result) {
     case .success(let todos):
@@ -83,7 +83,7 @@ class TodosTableViewController: UITableViewController, EndpointLoading {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.load(endpoint: TodosAPI.shared.get()) { (todos) in
+        self.load(endpoint: TodosAPI.shared.todos()) { (todos) in
             self.todos = todos
             self.tableView.reloadData()
         }
@@ -106,10 +106,10 @@ class TodosAPI {
     // ...
 
     lazy var allTodos: StatefulEndpoint<[Todo]> = {
-        return StatefulEndpoint(endpoint: self.get())
+        return StatefulEndpoint(endpoint: self.todos())
     }()
 
-    private func get() -> Endpoint<[Todo]> {
+    private func todos() -> Endpoint<[Todo]> {
         var request = URLRequest(method: .get, url: self.url)
         request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
@@ -141,14 +141,15 @@ Or use the `EndpointLoading` extension which provides an `observe(endpoint:)` me
 class TodosTableViewController: UITableViewController, EndpointLoading {
 
     // ...
-    let todosResource = TodosAPI.shared.all
+	
+    let todosEndpoint = TodosAPI.shared.allTodos
 
     // ...
 
     override func viewDidLoad() {
         // ...
 
-        observe(endpoint: self.todosResource) { todos in
+        observe(endpoint: self.todosEndpoint) { todos in
             self.todos = todos
             self.tableView.reloadData()
         }

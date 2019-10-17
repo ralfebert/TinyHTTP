@@ -43,16 +43,16 @@ class TodosAPI {
     private init() {}
 
     lazy var allTodos: StatefulEndpoint<[Todo]> = {
-        StatefulEndpoint(endpoint: self.get())
+        StatefulEndpoint(endpoint: self.todos())
     }()
 
-    private func get() -> Endpoint<[Todo]> {
+    private func todos() -> Endpoint<[Todo]> {
         var request = URLRequest(method: .get, url: self.url)
         request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
     }
 
-    func get(id: Int) -> Endpoint<Todo> {
+    func todo(id: Int) -> Endpoint<Todo> {
         var request = URLRequest(method: .get, url: urlFor(id: id))
         request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
