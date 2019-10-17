@@ -112,7 +112,7 @@ class TodosAPI {
 
     private func get() -> Endpoint<[Todo]> {
         var request = URLRequest(method: .get, url: self.url)
-        request.httpAccept(.json)
+        request.setHeaderAccept(.json)
         return Endpoint(request: request, decodeResponse: self.jsonDecoder.decodeResponse)
     }
     
