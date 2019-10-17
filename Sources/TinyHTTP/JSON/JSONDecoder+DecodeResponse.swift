@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 import Foundation
+import os
 
 extension JSONDecoder {
 
@@ -28,7 +29,12 @@ extension JSONDecoder {
         guard let data = data else {
             throw EndpointError.noData
         }
-        return try self.decode(T.self, from: data)
+        do {
+            return try self.decode(T.self, from: data)
+        } catch {
+            os_log("%s Error parsing JSON: %s %s", log: EndpointLogging.log, type: .debug, String(describing: error), String(data: data, encoding: .utf8)!)
+            throw error
+        }
     }
 
 }
